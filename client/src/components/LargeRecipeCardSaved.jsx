@@ -26,7 +26,6 @@ var LargeRecipeCardSaved = (props) => (
         </div>
       </div>
     </div>
-  </div>
 )
 
 window.LargeRecipeCard = LargeRecipeCardSaved;
