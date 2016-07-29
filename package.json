@@ -42,6 +42,9 @@
     "passport-auth0": "^0.5.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.6.0",
+    "redux": "^3.5.2",
     "request": "^2.36.0",
     "serve-favicon": "~2.3.0"
   },
