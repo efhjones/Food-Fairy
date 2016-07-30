@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import RecipeList from './RecipeList';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSearch } from '../actions/index';
+import { setRecipe } from '../actions/index';
+import { fetchRecipes } from '../actions/index';
+
 
 // SearchBox is rendered on SearchPage and receives searchAPI and callback as props
 export default class SearchBox extends React.Component {
@@ -12,35 +16,33 @@ export default class SearchBox extends React.Component {
   //                  and allows the searchpage to have access to them in turn
   constructor(props){
     super(props);
-    this.setSearch = this.setSearch.bind(this);
+    this.state = {
+      value: ''
+    }
+    this.props.setSearch = this.props.setSearch.bind(this);
   }
 
-  setSearch(e) {
-    //do something with search
+  search(param) {
+    this.props.setSearch(param);
+    window.location.hash = '#/results';
+    //this.setSearch(this.state.value);
   }
 
-  searchAPI() {
-      axios.post('/api/recipes', this.state.value)
-        .then(function(recipes) {
-          callback(recipes);
-        })
-        .catch(function(err) {
-          console.log("couldn't find any recipes. Error: ", err)
-        })
+  componentWillReceiveProps(){
+    console.log("SearchBox Props", this.props);
   }
-  //   this.props.searchAPI({query: this.state.value}, (recipes) => {
-  //     // callback gives access to the result of the searchAPI query
-  //     this.props.callback(recipes);
-  //   });
 
 
   render(){
     return(
       <div className="center-block searchbox">
         {/* event set the state of the SearchBox to the data input */}
-        <input className="searchboxinput" type="text" />
+        <input className="searchboxinput" type="text"onChange={(event) => {
+            {/* live searching could be implemented easily from here */}
+            this.setState({value: event.target.value});
+        }} value={this.state.value}/>
         {/* searchAPI uses the state value of this component as the query input on the searchAPI method */}
-        <button className="searchsubmit" onClick={() => {this.setSearch()}}>Search</button>
+        <button className="searchsubmit" onClick={() => {this.search(this.state.value)}}>Search</button>
       </div>
     )
   }
@@ -48,12 +50,13 @@ export default class SearchBox extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    recipes: state.recipes
+    recipes: state.recipes,
+    searchQuery: state.searchQuery
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setSearch:setSearch}, dispatch);
+  return bindActionCreators({setSearch:setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);

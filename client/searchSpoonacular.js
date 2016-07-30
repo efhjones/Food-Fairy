@@ -3,7 +3,8 @@ window.SPOONTACULAR_API_KEY = 'R6un6vpSqfmshTqGWty9ffZySRO0p1QAKU4jsn5Zy79FEs8QM
 
 //searchs the recipes from the API using a user query and a callback to access
 //  the recipes, will return up to 10 results
-var searchSpoontacular = function({query, max = 10}, callback) {
+var searchSpoontacular = function(obj, callback) {
+  query = obj.query;
   $.ajax({
     url: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients',
     method: 'GET',

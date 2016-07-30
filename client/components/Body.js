@@ -5,12 +5,16 @@ import Nav from './Nav';
 import SearchBox from '../containers/SearchBox';
 
 export default class Body extends React.Component {
+
+  componentWillReceiveProps(){
+  }
   render () {
     return (
-        <div>
-          <Nav />
-          <SearchBox />
-        </div>
+      <div>
+        <Nav />
+        <SearchBox />
+        {this.props.children}
+      </div>
     )
   }
 }

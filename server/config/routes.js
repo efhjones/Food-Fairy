@@ -1,7 +1,16 @@
-const recipesController = require('../recipes/recipesController');
+
+const helpers = require('./helpers');
 
 module.exports = function(app, express) {
 
+  app.post('/api/recipes', function(req, res){
+    console.log("In routes, post req", req.body);
+    helpers.searchSpoonacular({query: req.body.query, max : 10}, function(response){
+      console.log("response", response);
+      res.send(response);
+    });
+  })
+}
   //   // retrieve all recipes from db
   // app.get('/api/recipes', recipesController.getAllRecipes);
 
@@ -73,4 +82,3 @@ module.exports = function(app, express) {
   //     }
   //   });
   // });
-}
