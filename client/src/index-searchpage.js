@@ -1,1 +1,0 @@
-ReactDOM.render(<SearchPage searchAPI={window.searchSpoontacular}/>, document.getElementById('app'));
