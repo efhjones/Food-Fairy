@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class LargeRecipeCard extends React.Component {
+export default class SelectedRecipe extends React.Component {
   //props: recipe - the recipe data to be shown; taken from the API
   //       searchInstructions - function with ajax call to pull recipe steps from API
   //                            by the recipe ID
@@ -61,6 +61,7 @@ export default class LargeRecipeCard extends React.Component {
   render(){
     return(
       <div>
+      <div>TEST</div>
         {/* the backdrop that covers the rest of the page when the large recipe
           card is rendered - does not need content. It's styled to an absolute position
           to take up the entire screen */}
