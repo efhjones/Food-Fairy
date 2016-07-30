@@ -37,7 +37,7 @@ exports.searchSpoonacular = function(obj, cb) {
     headers: {
       'X-Mashape-Authorization': apikey
     },
-    data: {
+    params : {
       fillIngredients: "true",
       ingredients: query,
       limitLicense: "false",
@@ -45,13 +45,29 @@ exports.searchSpoonacular = function(obj, cb) {
       ranking: "1"
     }
   };
-    request.get(options)
-    .on('response', function(response){
-      cb({recipe:'bread'});
-      console.log(response.statusCode);
-      console.log(response.headers['content-type']);
-      console.log(response.body);
-    })
+    // request.get(options)
+    // .on('response', function(response){
+    //   console.log(response.statusCode);
+    //   console.log(response.headers['content-type']);
+    //   console.log(response.body);
+    //   //cb({recipe:'bread'});
+    // })
+    var options = {
+      method: 'GET',
+      url: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients',
+      qs: { ingredients: query },
+      headers: {
+        //'postman-token': 'd4a14e23-00ad-cfbf-dc8f-d6423cd2e608',
+        'cache-control': 'no-cache',
+        'x-mashape-authorization': 'R6un6vpSqfmshTqGWty9ffZySRO0p1QAKU4jsn5Zy79FEs8QMm'
+      }
+    };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+      cb(body);
+    });
+
   };
   // $.ajax({
   //   url: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients',

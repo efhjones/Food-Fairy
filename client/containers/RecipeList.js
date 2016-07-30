@@ -8,6 +8,7 @@ import RecipeListEntry from './RecipeListEntry';
 import { setSearch } from '../actions/index';
 import { setRecipe } from '../actions/index';
 import { fetchRecipes } from '../actions/index';
+import ReduxPromise from 'redux-promise';
 
 
 class RecipeList extends React.Component {
@@ -17,28 +18,24 @@ class RecipeList extends React.Component {
 
   componentWillMount() {
     var context = this;
-    console.log("Context", context.props.fetchRecipes);
-
     console.log("Recipe list props", this.props);
-    this.getRecipes(context.props.searchQuery, function(recipes){
-      console.log('in componentWillMount, recipes', recipes);
-      context.props.fetchRecipes(recipes);
-    });
-    //incomplete?
+    this.getRecipes(context.props.searchQuery)
+      .then(function(recipes){
+        context.props.fetchRecipes(recipes);
+      });
   }
 
   componentWillReceiveProps () {
     console.log("Recipes got new props", this.props);
   }
 
-  getRecipes(query, callback){
+  getRecipes(query){
     var envelope = {
       query: query
     }
-    axios.post('/api/recipes', envelope)
+    return axios.post('/api/recipes', envelope)
     .then(function(recipes) {
-      console.log("received", recipes);
-      callback(recipes.data.recipe);
+      return recipes.data;
     })
     .catch(function(err) {
       console.log("Front side, couldn't find any recipes. Error: ", err)
@@ -50,14 +47,26 @@ class RecipeList extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    return (
-      <div>
-        <div>test</div>
-        {this.props.recipes.map((recipe, index) => <RecipeListEntry onRecipeClick={() => this.onRecipeClick(recipe) } key={index} recipe={recipe} />)}
-      </div>
-    )
+    console.log("Yo I'm rendering", this.props.recipes[0]);
+    if (this.props.recipes[0]){
+      return (
+        <div>IYIYIYIYIY
+          {this.props.recipes[0].map((recipe, index) =>
+            <RecipeListEntry
+            onRecipeClick={() => this.onRecipeClick(recipe) }
+            key={index}
+            recipe={recipe}
+            />
+          )}
+        </div>
+      )
+    } else {
+      return (
+        <div>Loading...</div>
+      )
+    }
   }
+
 }
 
 
@@ -73,4 +82,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
+
+
+
+
 

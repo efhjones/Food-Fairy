@@ -29,7 +29,6 @@ export default class SearchBox extends React.Component {
   }
 
   componentWillReceiveProps(){
-    console.log("SearchBox Props", this.props);
   }
 
 

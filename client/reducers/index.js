@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   selectedRecipe : SelectedRecipeReducer,
   //TODO: Use this info to implement filter?
   searchQuery : SearchQueryReducer,
-  allRecipes : RecipeReducer
+  recipes : RecipeReducer
 
 });
 
