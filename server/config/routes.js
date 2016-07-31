@@ -1,8 +1,25 @@
-
 const helpers = require('./helpers');
+const usersController = require('../users/usersController');
+const passportHelpers = require('../passport/passport_strategies');
+const passport = require('passport');
+
+  //Pass this in to secure certain routes
+    //jwt will automatically try to create a session...Stop it
+const requireAuth = passport.authenticate('jwt', { session: false });
+const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function(app, express) {
 
+  // Route for fetching all Recipes
+  app.get('/user/fetchRecipes', requireAuth, function(req, res) {
+    res.send({ hi: "there" });
+  });
+
+  //Routes for signin/signout
+  app.post('/user/signup', usersController.signup);
+  app.post('/user/signin', requireSignin, usersController.signin);
+
+  //Route for API
   app.post('/api/recipes', function(req, res){
     console.log("In routes, post req", req.body);
     helpers.searchSpoonacular({query: req.body.query, max : 10}, function(response){
@@ -10,7 +27,12 @@ module.exports = function(app, express) {
       res.send(response);
     });
   })
+
 }
+
+
+
+
   //   // retrieve all recipes from db
   // app.get('/api/recipes', recipesController.getAllRecipes);
 

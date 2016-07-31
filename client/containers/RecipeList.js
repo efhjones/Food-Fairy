@@ -19,9 +19,12 @@ class RecipeList extends React.Component {
   componentWillMount() {
     var context = this;
     console.log("Recipe list props", this.props);
-    this.getRecipes(context.props.searchQuery)
+    this.getRecipes(context.props.searchQuery.recipe)
       .then(function(recipes){
         context.props.fetchRecipes(recipes);
+      })
+      .catch(function(err) {
+        throw err;
       });
   }
 

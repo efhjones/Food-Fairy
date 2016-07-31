@@ -18,14 +18,13 @@ export default class RecipeListEntry extends React.Component {
   }
 
   render(){
-    console.log('Recipe list entry', this.props);
+    console.log('Recipe list entry', this.props.recipe);
     return (
       <div>YOYOYOYOYO
-         {this.props.recipe}
          <div>
           <img src={this.props.recipe.image} />
          </div>
-         <div>
+        <div>
           {this.props.recipe.title}
         </div>
       </div>
