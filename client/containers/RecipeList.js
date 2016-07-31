@@ -26,6 +26,7 @@ class RecipeList extends React.Component {
       .catch(function(err) {
         throw err;
       });
+
   }
 
   componentWillReceiveProps () {
@@ -33,12 +34,17 @@ class RecipeList extends React.Component {
   }
 
   getRecipes(query){
+    var context = this;
     var envelope = {
       query: query
     }
-    return axios.post('/api/recipes', envelope)
+    axios.post('/api/recipes', envelope)
     .then(function(recipes) {
+      console.log('')
       return recipes.data;
+    })
+    .then(function(results){
+      context.props.fetchRecipes(results);
     })
     .catch(function(err) {
       console.log("Front side, couldn't find any recipes. Error: ", err)
@@ -46,17 +52,26 @@ class RecipeList extends React.Component {
   }
 
   onRecipeClick(recipe) {
-
+     axios.post('/api/recipes:' + recipe.id)
+    .then(function(recipe) {
+      console.log('I got this recipe back: ', recipe);
+    })
+    .then(function(results){
+      console.log("This is in the second then function", results);
+    })
+    .catch(function(err) {
+      console.log("Some error in recipeClick axios", err)
+    })
   }
 
   render() {
     console.log("Yo I'm rendering", this.props.recipes[0]);
     if (this.props.recipes[0]){
       return (
-        <div>IYIYIYIYIY
+        <div>
           {this.props.recipes[0].map((recipe, index) =>
             <RecipeListEntry
-            onRecipeClick={() => this.onRecipeClick(recipe) }
+            onRecipeClick={ () => this.onRecipeClick(recipe) }
             key={index}
             recipe={recipe}
             />
@@ -85,7 +100,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
-
 
 
 
