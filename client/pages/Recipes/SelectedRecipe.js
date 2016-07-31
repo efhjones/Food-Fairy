@@ -38,7 +38,7 @@ class SelectedRecipe extends React.Component {
         <div className='recipe-card'>
           <div dangerouslySetInnerHTML={{__html: this.props.summaryInstructions.summary.summary}} />
           <div>
-            <ul>
+            <ol>
               {/* loops through all the recipe steps and adds them to an ordered list */}
               {this.props.summaryInstructions.instructions.map((instruction)=>{
                 return (
@@ -46,7 +46,7 @@ class SelectedRecipe extends React.Component {
                 )
               }
               )}
-            </ul>
+            </ol>
           </div>
           </div>
       </div>
