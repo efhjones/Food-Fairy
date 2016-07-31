@@ -9,7 +9,6 @@ import RecipeListEntry from '../../containers/RecipeListEntry';
 import { setSearch } from '../../actions/index';
 import { setRecipe } from '../../actions/index';
 import { fetchRecipes } from '../../actions/index';
-import { setInstructions } from '../../actions/index';
 import ReduxPromise from 'redux-promise';
 import _ from 'underscore';
 

@@ -122,7 +122,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setSearch: setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes, setInstructions: setInstructions }, dispatch);
+  return bindActionCreators({setSearch: setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
