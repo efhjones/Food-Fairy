@@ -9,7 +9,9 @@ import RecipeListEntry from '../../containers/RecipeListEntry';
 import { setSearch } from '../../actions/index';
 import { setRecipe } from '../../actions/index';
 import { fetchRecipes } from '../../actions/index';
+import { setInstructions } from '../../actions/index';
 import ReduxPromise from 'redux-promise';
+import _ from 'underscore';
 
 class SelectedRecipe extends React.Component {
   constructor(props){
@@ -20,24 +22,9 @@ class SelectedRecipe extends React.Component {
     console.log("SelectedRecipe props", this.props);
   }
 
-  //function to save the recipe to the mongo database
-  // saveRecipe(){
-  //   $.ajax({
-  //     url: '/api/recipes',
-  //     type: 'POST',
-  //     data: { title: this.props.recipe.title,
-  //             image: this.props.recipe.image,
-  //             summary: this.state.summary,
-  //             steps: JSON.stringify(this.state.steps),
-  //             likes: this.props.recipe.likes },
-  //     success: function(data) {
-  //       console.log('success', data);
-  //     }.bind(this),
-  //     error: function() {
-  //       console.log('failure')
-  //     }
-  //   });
-  // }
+  componentWillReceiveProps(){
+    console.log("SelectedRecipe got new props", this.props);
+  }
 
   render(){
     console.log("Yo selected recipe props in da house", this.props)
@@ -46,15 +33,22 @@ class SelectedRecipe extends React.Component {
         <div>Loading...</div>
       )
     }
-    console.log(this.props)
     return(
-      <div>
-      <div className='recipe-card'>
-        {this.props.summaryInstructions.summary.summary}
-      </div>
-      <div>
-        {this.props.summaryInstructions.instructions.toString()}
-      </div>
+      <div>{JSON.stringify(this.step)}
+        <div className='recipe-card'>
+          <div dangerouslySetInnerHTML={{__html: this.props.summaryInstructions.summary.summary}} />
+          <div>
+            <ul>
+              {/* loops through all the recipe steps and adds them to an ordered list */}
+              {this.props.summaryInstructions.instructions.map((instruction)=>{
+                return (
+                  <li>{instruction.step}</li>
+                )
+              }
+              )}
+            </ul>
+          </div>
+          </div>
       </div>
     )
   }
@@ -70,7 +64,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setSearch:setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes}, dispatch);
+  return bindActionCreators({setSearch: setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedRecipe);

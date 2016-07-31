@@ -94,12 +94,11 @@ class RecipeList extends React.Component {
       )
     }
     if (this.props.summaryInstructions){
-      console.log("YO, I see summaryInstructions. Props: ", this.props);
       return (
-        <div>
-          <SelectedRecipe
+        <div>{JSON.stringify(this.props.instructions)}
+           <SelectedRecipe
             key={index}
-            summaryInstructions={summaryInstructions}
+            step={step}
           />
         </div>
       )
@@ -117,12 +116,13 @@ function mapStateToProps(state) {
   return {
     recipes: state.recipes,
     searchQuery: state.searchQuery,
-    summaryInstructions: state.summaryInstructions
+    summaryInstructions: state.summaryInstructions,
+    instructions: state.instructions
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setSearch:setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes}, dispatch);
+  return bindActionCreators({setSearch: setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes, setInstructions: setInstructions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
