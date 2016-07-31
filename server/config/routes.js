@@ -1,5 +1,5 @@
-
 const helpers = require('./helpers');
+const usersController = require('../users/usersController');
 
 module.exports = function(app, express) {
 
@@ -10,7 +10,14 @@ module.exports = function(app, express) {
       res.send(response);
     });
   })
+
+  app.post('/user/signup', usersController.signup);
+
 }
+
+
+
+
   //   // retrieve all recipes from db
   // app.get('/api/recipes', recipesController.getAllRecipes);
 

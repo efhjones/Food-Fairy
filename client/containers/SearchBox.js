@@ -23,6 +23,7 @@ export default class SearchBox extends React.Component {
   }
 
   search(param) {
+    param = {recipe: param};
     this.props.setSearch(param);
     window.location.hash = '#/results';
     //this.setSearch(this.state.value);
