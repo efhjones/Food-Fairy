@@ -5,11 +5,9 @@ import SearchQueryReducer from './reducer_search';
 
 
 const rootReducer = combineReducers({
-  selectedRecipe : SelectedRecipeReducer,
-  //TODO: Use this info to implement filter?
+  summaryInstructions : SelectedRecipeReducer,
   searchQuery : SearchQueryReducer,
   recipes : RecipeReducer
-
 });
 
 export default rootReducer;

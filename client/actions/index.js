@@ -18,10 +18,11 @@ export function fetchRecipes(recipes) {
   }
 }
 
-export function setRecipe(recipe) {
+export function setRecipe(object) {
+  console.log("setRecipe called", object);
   return {
     type: SET_RECIPE,
-    payload: recipes
+    payload: object
   }
 }
 

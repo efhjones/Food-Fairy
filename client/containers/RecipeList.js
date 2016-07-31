@@ -52,20 +52,34 @@ class RecipeList extends React.Component {
   }
 
   onRecipeClick(recipe) {
-     axios.post('/api/recipes:' + recipe.id)
-    .then(function(recipe) {
-      console.log('I got this recipe back: ', recipe);
-    })
-    .then(function(results){
-      console.log("This is in the second then function", results);
+    var context = this;
+    console.log('onRecipeClick Id: ', recipe.id);
+    var envelope = {
+      id: recipe.id
+    }
+    axios.post('/api/getInstructions', envelope)
+    .then(function(instructionData) {
+      axios.post('/api/getSummary', envelope)
+        .then(function(summaryData) {
+        var summary = summaryData.data;
+        var instructions = instructionData.data[0].steps;
+          context.props.setRecipe({
+            summary: summary,
+            instructions: instructions
+          });
+        window.location.hash = '/SelectedRecipe';
+        })
+        .catch(function(err) {
+        console.log("Some error in recipeClick axios summary", err)
+        })
     })
     .catch(function(err) {
-      console.log("Some error in recipeClick axios", err)
+      console.log("Some error in recipeClick axios instructions", err)
     })
   }
 
   render() {
-    console.log("Yo I'm rendering", this.props.recipes[0]);
+    console.log("Yo I'm rendering", this.props);
     if (this.props.recipes[0]){
       return (
         <div>
@@ -76,6 +90,17 @@ class RecipeList extends React.Component {
             recipe={recipe}
             />
           )}
+        </div>
+      )
+    }
+    if (this.props.summaryInstructions){
+      console.log("YO, I see summaryInstructions. Props: ", this.props);
+      return (
+        <div>
+          <SelectedRecipe
+            key={index}
+            summaryInstructions={summaryInstructions}
+          />
         </div>
       )
     } else {
@@ -91,7 +116,8 @@ class RecipeList extends React.Component {
 function mapStateToProps(state) {
   return {
     recipes: state.recipes,
-    searchQuery: state.searchQuery
+    searchQuery: state.searchQuery,
+    summaryInstructions: state.summaryInstructions
   }
 }
 
