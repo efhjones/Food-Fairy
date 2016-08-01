@@ -11,9 +11,12 @@ export default class RecipeListEntry extends React.Component {
     super(props);
   }
 
+
+
   render(){
     console.log('Recipe list entry', this.props.recipe);
     return (
+
       <div
         className='recipe-card'
         onClick={this.props.onRecipeClick}>

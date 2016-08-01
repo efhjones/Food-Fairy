@@ -46,7 +46,7 @@ exports.searchInstructions = function(id, cb) {
 exports.searchSummary = function(id, cb) {
   var options = {
     method: 'GET',
-    url: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/637008/summary',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/'+id+'/summary',
     qs: {
       'X-Mashape-Authorization': apikey
     },
