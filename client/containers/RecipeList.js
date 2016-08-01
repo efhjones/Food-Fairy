@@ -9,6 +9,7 @@ import { setSearch } from '../actions/index';
 import { setRecipe } from '../actions/index';
 import { fetchRecipes } from '../actions/index';
 import ReduxPromise from 'redux-promise';
+import { browserHistory } from 'react-router';
 
 
 class RecipeList extends React.Component {
@@ -84,7 +85,8 @@ class RecipeList extends React.Component {
             summary: summary,
             instructions: instructions
           });
-        window.location.hash = '/SelectedRecipe';
+        browserHistory.push('/SelectedRecipe');
+        // window.location.hash = '/SelectedRecipe';
         })
         .catch(function(err) {
         console.log("Some error in recipeClick axios summary", err)
