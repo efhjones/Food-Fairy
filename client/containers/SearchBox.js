@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { setSearch } from '../actions/index';
 import { setRecipe } from '../actions/index';
 import { fetchRecipes } from '../actions/index';
-
+import { browserHistory } from 'react-router';
 
 // SearchBox is rendered on SearchPage and receives searchAPI and callback as props
 export default class SearchBox extends React.Component {
@@ -25,7 +25,8 @@ export default class SearchBox extends React.Component {
   search(param) {
     param = {recipe: param};
     this.props.setSearch(param);
-    window.location.hash = '#/results';
+    browserHistory.push('/results');
+    // window.location.hash = '#/results';
     //this.setSearch(this.state.value);
   }
 

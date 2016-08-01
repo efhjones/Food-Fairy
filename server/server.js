@@ -16,7 +16,9 @@ const app = express();
 require('./config/middleware')(app, express);
 //stores routing
 require('./config/routes')(app, express);
-
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, '../client', 'index.html'))
+})
 
 
 //DB Set up

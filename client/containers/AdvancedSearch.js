@@ -8,6 +8,7 @@ import { setSearch } from '../actions/index';
 import { setRecipe } from '../actions/index';
 import { fetchRecipes } from '../actions/index';
 import { setAdvSearch } from '../actions/index';
+import { browserHistory } from 'react-router';
 
 
 // SearchBox is rendered on SearchPage and receives searchAPI and callback as props
@@ -32,7 +33,8 @@ export default class AdvancedSearch extends React.Component {
 
   search(params) {
     this.props.setAdvSearch(params);
-    window.location.hash = '#/results';
+    browserHistory.push('/results');
+    // window.location.hash = '#/results';
     //this.setSearch(this.state.value);
   }
 

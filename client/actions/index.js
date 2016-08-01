@@ -22,7 +22,7 @@ export function signinUser({username, password}) {
         3) Allow access to db route
       */
       .then(response => {
-        browserHistory.push('/');
+        browserHistory.push('/saved');
       })
       .catch(() => {
 
