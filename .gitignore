@@ -1,5 +1,8 @@
 ### node etc ###
 
+#Index.js
+client/index.js
+
 # Logs
 logs
 *.log
