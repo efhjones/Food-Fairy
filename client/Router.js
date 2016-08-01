@@ -7,7 +7,7 @@ import SearchBox from './containers/SearchBox';
 import SelectedRecipe from './pages/Recipes/SelectedRecipe';
 import AdvancedSearch from './containers/AdvancedSearch';
 import SignupPage from  './pages/auth/Signup';
-import LoginPage from './pages/auth/Login';
+import SigninPage from './pages/auth/Signin';
 
 
 export default (
@@ -16,6 +16,6 @@ export default (
     <Route path="SelectedRecipe" component={SelectedRecipe} />
     <Route path="advanced" component={AdvancedSearch} />
     <Route path = "signup" component = {SignupPage} />
-    <Route path = "login" component = {LoginPage} />
+    <Route path = "signin" component = {SigninPage} />
   </Route>
 )
