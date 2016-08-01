@@ -7,6 +7,7 @@ export const UNAUTH_USER = 'UNAUTH_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const FETCH_MESSAGE = 'FETCH_MESSAGE';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 // Normally you always want to return an object from action creator
   //Redux-thunk allows you to return a function, allowing you direct access to dispatch to:
@@ -15,6 +16,17 @@ import axios from 'axios';
 export function signinUser({username, password}) {
   return function(dispatch) {
     axios.post('/user/signin', {username: username, password: password})
+      /*If request is good
+        1) Update state to show user is auth'd
+        2) Save JWT
+        3) Allow access to db route
+      */
+      .then(response => {
+
+      })
+      .catch(() => {
+
+      })
   }
 }
 

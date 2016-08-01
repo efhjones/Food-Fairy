@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, Link, hashHistory, IndexRoute} from 'react-router';
+import { Router, Route, Link, hashHistory, browserHistory, IndexRoute} from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import routes from './Router';
@@ -13,7 +13,7 @@ const createStoreWithMiddleware = applyMiddleware(Promise_Handler, reduxThunk)(c
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router history={hashHistory}>{routes}</Router>
+    <Router history={browserHistory}>{routes}</Router>
   </Provider>
 
   , document.getElementById('app'));
