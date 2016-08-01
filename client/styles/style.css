@@ -127,6 +127,10 @@ body {
   width: 17%;
 }
 
+.advancedSearchSubmit {
+  text-align: center;
+}
+
 /*
   controls both saved recipes and searched recipes lists
   adds space between it and the edges of the page
@@ -244,3 +248,5 @@ body {
   display: inline-block;
   margin: 10px;
 }
+
+

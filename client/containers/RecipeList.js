@@ -19,13 +19,21 @@ class RecipeList extends React.Component {
   componentWillMount() {
     var context = this;
     console.log("Recipe list props", this.props);
-    this.getRecipes(context.props.searchQuery.recipe)
+    if (context.props.advSearch){
+      this.advGetRecipes(context.props.advSearch)
+        .then(function(recipes){
+          console.log('advGetRecipes' , recipes)
+          context.props.fetchRecipes(recipes);
+        })
+    } else { this.getRecipes(context.props.searchQuery)
       .then(function(recipes){
         context.props.fetchRecipes(recipes);
       })
       .catch(function(err) {
         throw err;
       });
+
+    }
 
   }
 
@@ -50,13 +58,28 @@ class RecipeList extends React.Component {
     })
   }
 
+  advGetRecipes(query){
+    var envelope = {
+      query: query
+    }
+    console.log('running advGetRecipes')
+    return axios.post('/api/advrecipes', envelope)
+      .then(function(recipes) {
+        console.log('recipe results', recipes.data.results);
+        return recipes.data.results;
+      })
+      .catch(function(err) {
+        console.log("Couldn't find any recipes", err);
+      })
+  }
+
   onRecipeClick(recipe) {
     var context = this;
     console.log('onRecipeClick Id: ', recipe.id);
     var envelope = {
       id: recipe.id
     }
-    axios.post('/api/getInstructions', envelope)
+    return axios.post('/api/getInstructions', envelope)
     .then(function(instructionData) {
       axios.post('/api/getSummary', envelope)
         .then(function(summaryData) {
@@ -78,7 +101,6 @@ class RecipeList extends React.Component {
   }
 
   render() {
-    console.log("Yo I'm rendering", this.props);
     if (this.props.recipes[0]){
       return (
         <div>
@@ -116,7 +138,8 @@ function mapStateToProps(state) {
     recipes: state.recipes,
     searchQuery: state.searchQuery,
     summaryInstructions: state.summaryInstructions,
-    instructions: state.instructions
+    instructions: state.instructions,
+    advSearch: state.advSearch
   }
 }
 

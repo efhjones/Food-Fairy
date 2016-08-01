@@ -21,7 +21,7 @@ module.exports = function(app, express) {
 
   //Route for API
   app.post('/api/recipes', function(req, res){
-    console.log("In routes, post req", req.body);
+    // console.log("In routes, post req", req.body);
     helpers.searchSpoonacular({query: req.body.query, max : 10}, function(response){
       console.log("response", response);
       res.send(response);
@@ -39,11 +39,30 @@ module.exports = function(app, express) {
     helpers.searchSummary(req.body.id, function(response){
       res.send(response);
     });
-  });
+  })
+
+  app.post('/api/advrecipes', function(req, res){
+    console.log("Advanced Recipes Request in Routes", req.body);
+    helpers.complexSearch({query: req.body.query, max : 10}, function(response){
+      console.log("response", response);
+      res.send(response);
+    });
+  })
+
 }
 
 
 
+// module.exports = function(app, express) {
+
+//   app.post('/api/advrecipes', function(req, res){
+//     console.log("Advanced Recipes Request in Routes", req.body);
+//     helpers.complexSearch({query: req.body.query, max : 10}, function(response){
+//       console.log("response", response);
+//       res.send(response);
+//     });
+//   })
+// }
 
   //   // retrieve all recipes from db
   // app.get('/api/recipes', recipesController.getAllRecipes);
