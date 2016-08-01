@@ -72,7 +72,7 @@ module.exports = function(app, express) {
     console.log("Save a Recipe Request in Routes", req.body);
     //req.body should have { recipeObj: {}, user: username }
     //req.body.user?
-    usersController.saveUserRecipe(req.body function (response) {
+    usersController.saveUserRecipe(req.body, function (response) {
       console.log("response after saveUserRecipe in routes", response);
       res.send(201, response);
     });
@@ -85,7 +85,7 @@ module.exports = function(app, express) {
     //should take in username
     //req.body should have { recipeId: NUMBER, user: username }
     console.log("Delete Recipe Request in Routes", req.body);
-    usersController.deleteUserRecipe(req.body function (response) {
+    usersController.deleteUserRecipe(req.body, function (response) {
       console.log("response after deleteUserRecipe in routes", response);
       res.send(201, response);
     });

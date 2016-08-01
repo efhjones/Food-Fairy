@@ -1,7 +1,7 @@
 const jwt = require('jwt-simple');
 const config = require('../config/app_key');
 const User = require('./usersModel');
-const Recipe = require('./recipesModel');
+const Recipe = require('../recipes/recipesModel');
 const helpers = require('../config/helpers');
 /*
   # Takes in a user
