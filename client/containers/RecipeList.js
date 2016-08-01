@@ -19,9 +19,7 @@ class RecipeList extends React.Component {
   componentWillMount() {
     var context = this;
     console.log("Recipe list props", this.props);
-<<<<<<< 58092e4386db7c0c07081d19b1f57fc0741b0069
     this.getRecipes(context.props.searchQuery.recipe)
-=======
     if (context.props.advSearch){
       this.advGetRecipes(context.props.advSearch)
         .then(function(recipes){
@@ -29,7 +27,6 @@ class RecipeList extends React.Component {
           context.props.fetchRecipes(recipes);
         })
     } else { this.getRecipes(context.props.searchQuery)
->>>>>>> added advanced search
       .then(function(recipes){
         context.props.fetchRecipes(recipes);
       })
