@@ -12,12 +12,10 @@ import SigninPage from './pages/auth/Signin';
 
 export default (
   <Route path="/" component={BodyPage}>
-    <Router history={browserHistory}>
-      <Route path="results" component={RecipeList} />
-      <Route path="SelectedRecipe" component={SelectedRecipe} />
-      <Route path="advanced" component={AdvancedSearch} />
-      <Route path = "signup" component = {SignupPage} />
-      <Route path = "signin" component = {SigninPage} />
-    </Router>
+    <Route path="results" component={RecipeList} />
+    <Route path="SelectedRecipe" component={SelectedRecipe} />
+    <Route path="advanced" component={AdvancedSearch} />
+    <Route path = "signup" component = {SignupPage} />
+    <Route path = "signin" component = {SigninPage} />
   </Route>
 )
