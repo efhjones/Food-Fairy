@@ -101,10 +101,12 @@ class RecipeList extends React.Component {
   }
 
   render() {
-    if (this.props.recipes[0]){
+
+    console.log("Yo I'm rendering", this.props.recipes);
+    if (this.props.recipes){
       return (
         <div>
-          {this.props.recipes[0].map((recipe, index) =>
+          {this.props.recipes.map((recipe, index) =>
             <RecipeListEntry
             onRecipeClick={ () => this.onRecipeClick(recipe) }
             key={index}
