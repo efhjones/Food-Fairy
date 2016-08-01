@@ -209,8 +209,8 @@ body {
 /*
   contains the recipe image to within the confines of a bootstrap grid
 */
-.recipeImg img {
-  max-width: 100%;
+.recipeImg {
+  max-width: 50px;
 }
 
 /*

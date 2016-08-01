@@ -3,13 +3,10 @@ import RecipeReducer from './reducer_recipes';
 import SelectedRecipeReducer from './reducer_selectedRecipe';
 import SearchQueryReducer from './reducer_search';
 
-
 const rootReducer = combineReducers({
-  selectedRecipe : SelectedRecipeReducer,
-  //TODO: Use this info to implement filter?
+  summaryInstructions : SelectedRecipeReducer,
   searchQuery : SearchQueryReducer,
   recipes : RecipeReducer
-
 });
 
 export default rootReducer;

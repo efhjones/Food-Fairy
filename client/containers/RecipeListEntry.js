@@ -9,24 +9,16 @@ export default class RecipeListEntry extends React.Component {
   //props: recipe - the recipe data to be shown; taken from the API
   constructor(props){
     super(props);
-    this.onRecipeClick = this.onRecipeClick.bind(this);
-  }
-
-  onRecipeClick() {
-    //Make an a tag instead?
-    this.props.setRecipe(id);
   }
 
   render(){
     console.log('Recipe list entry', this.props.recipe);
     return (
-      <div>YOYOYOYOYO
-         <div>
-          <img src={this.props.recipe.image} />
-         </div>
-        <div>
-          {this.props.recipe.title}
-        </div>
+      <div
+        className='recipe-card'
+        onClick={this.props.onRecipeClick}>
+      <img className='recipeImg' src={this.props.recipe.image} />
+      <div>{this.props.recipe.title}</div>
       </div>
     )
   }

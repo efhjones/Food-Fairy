@@ -1,95 +1,70 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import SearchBox from '../../containers/SearchBox';
+import RecipeList from '../../containers/RecipeList';
+import RecipeListEntry from '../../containers/RecipeListEntry';
+import { setSearch } from '../../actions/index';
+import { setRecipe } from '../../actions/index';
+import { fetchRecipes } from '../../actions/index';
+import ReduxPromise from 'redux-promise';
+import _ from 'underscore';
 
-export default class SelectedRecipe extends React.Component {
-  //props: recipe - the recipe data to be shown; taken from the API
-  //       searchInstructions - function with ajax call to pull recipe steps from API
-  //                            by the recipe ID
-  //       searchSummary - function with ajax call to retrieve the description of the
-  //                       recipe
-  //       searchIngredients - function with ajax call to retrieve the ingrediants of
-  //                           of a recipe. CURRENTLY UNUSED.
+class SelectedRecipe extends React.Component {
   constructor(props){
     super(props);
   }
 
-  //runs when component is rendered (react calls this function before rendering)
   componentWillMount(){
-
-    //retrtieves the instructions and creates the steps array from the data
-    //Not sure if this.state.id is the correct reference for the recipe id,
-    this.props.searchInstructions(this.state.id, (recipes)=>{
-      var concatRecipe = [];
-      recipes.forEach(function(recipe){
-        concatRecipe = concatRecipe.concat(recipe.steps);
-      })
-      this.setState({
-        steps: concatRecipe
-      })
-    })
-
-
-    //ingredients as future functionality? this can be obtained
-    //from "Get Product Data" endpoint and searchIngredients has
-    //already been added to the searchSpontacular.js with that endpoint
-
-    //retrieves the summary/description for this recipe
-    this.props.searchSummary(this.state.id, (data)=>{
-      this.setState({ summary: data.summary })
-    })
+    console.log("SelectedRecipe props", this.props);
   }
 
-  //function to save the recipe to the mongo database
-  // saveRecipe(){
-  //   $.ajax({
-  //     url: '/api/recipes',
-  //     type: 'POST',
-  //     data: { title: this.props.recipe.title,
-  //             image: this.props.recipe.image,
-  //             summary: this.state.summary,
-  //             steps: JSON.stringify(this.state.steps),
-  //             likes: this.props.recipe.likes },
-  //     success: function(data) {
-  //       console.log('success', data);
-  //     }.bind(this),
-  //     error: function() {
-  //       console.log('failure')
-  //     }
-  //   });
-  // }
+  componentWillReceiveProps(){
+    console.log("SelectedRecipe got new props", this.props);
+  }
 
   render(){
+    console.log("Yo selected recipe props in da house", this.props)
+    if (!this.props.summaryInstructions){
+      return (
+        <div>Loading...</div>
+      )
+    }
     return(
-      <div>
-      <div>TEST</div>
-        {/* the backdrop that covers the rest of the page when the large recipe
-          card is rendered - does not need content. It's styled to an absolute position
-          to take up the entire screen */}
-        <div className="recipe-card-large-backdrop"></div>
-        {/* the actual large recipe card */}
-        <div className="recipe-card-large">
+      <div>{JSON.stringify(this.step)}
+        <div className='recipe-card'>
+          <div dangerouslySetInnerHTML={{__html: this.props.summaryInstructions.summary.summary}} />
           <div>
-            <div className="recipeTitle text-center">{this.props.recipe.title}</div>
-            <img className="recipeImg center-block" src={this.props.recipe.image} alt="" />
-          </div>
-          <div className="recipeBody">
-            {/* react does not like html being added from unknown sources to its rendered
-              pages. This is to protect from attacks. In our case, we're forcing it to
-              accept html from the Ajax query to the API. This could likely be implemented
-              in a different way */}
-            <div dangerouslySetInnerHTML={{__html: this.state.summary}} />
             <ol>
               {/* loops through all the recipe steps and adds them to an ordered list */}
-              {this.state.steps.map((step)=>{ return (<li>{step.step}</li>)})}
+              {this.props.summaryInstructions.instructions.map((instruction)=>{
+                return (
+                  <li>{instruction.step}</li>
+                )
+              }
+              )}
             </ol>
-            <div className="saveorlike">
-              <button className='saveRecipeButton' onClick={this.saveRecipe.bind(this)}>Save Recipe</button>
-              <div className="recipeLikes"><img src="imgs/likes.png" /> {this.props.recipe.likes}</div>
-            </div>
           </div>
-        </div>
+          </div>
       </div>
     )
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    recipes: state.recipes,
+    searchQuery: state.searchQuery,
+    summaryInstructions: state.summaryInstructions
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({setSearch: setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedRecipe);
 

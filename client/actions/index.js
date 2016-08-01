@@ -2,6 +2,7 @@ export const SET_SEARCH = 'SET_SEARCH';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const SET_RECIPE = 'SET_RECIPE';
 
+
 export function setSearch(search) {
   console.log('setSearch called with: ', search);
   return {
@@ -18,10 +19,12 @@ export function fetchRecipes(recipes) {
   }
 }
 
-export function setRecipe(recipe) {
+export function setRecipe(object) {
+  console.log("setRecipe called", object);
   return {
     type: SET_RECIPE,
-    payload: recipes
+    payload: object
   }
 }
+
 

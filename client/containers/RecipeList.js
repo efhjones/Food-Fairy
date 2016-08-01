@@ -26,6 +26,7 @@ class RecipeList extends React.Component {
       .catch(function(err) {
         throw err;
       });
+
   }
 
   componentWillReceiveProps () {
@@ -33,6 +34,7 @@ class RecipeList extends React.Component {
   }
 
   getRecipes(query){
+    var context = this;
     var envelope = {
       query: query
     }
@@ -40,27 +42,63 @@ class RecipeList extends React.Component {
     .then(function(recipes) {
       return recipes.data;
     })
+    .then(function(results){
+      context.props.fetchRecipes(results);
+    })
     .catch(function(err) {
       console.log("Front side, couldn't find any recipes. Error: ", err)
     })
   }
 
   onRecipeClick(recipe) {
-
+    var context = this;
+    console.log('onRecipeClick Id: ', recipe.id);
+    var envelope = {
+      id: recipe.id
+    }
+    axios.post('/api/getInstructions', envelope)
+    .then(function(instructionData) {
+      axios.post('/api/getSummary', envelope)
+        .then(function(summaryData) {
+        var summary = summaryData.data;
+        var instructions = instructionData.data[0].steps;
+          context.props.setRecipe({
+            summary: summary,
+            instructions: instructions
+          });
+        window.location.hash = '/SelectedRecipe';
+        })
+        .catch(function(err) {
+        console.log("Some error in recipeClick axios summary", err)
+        })
+    })
+    .catch(function(err) {
+      console.log("Some error in recipeClick axios instructions", err)
+    })
   }
 
   render() {
-    console.log("Yo I'm rendering", this.props.recipes[0]);
+    console.log("Yo I'm rendering", this.props);
     if (this.props.recipes[0]){
       return (
-        <div>IYIYIYIYIY
+        <div>
           {this.props.recipes[0].map((recipe, index) =>
             <RecipeListEntry
-            onRecipeClick={() => this.onRecipeClick(recipe) }
+            onRecipeClick={ () => this.onRecipeClick(recipe) }
             key={index}
             recipe={recipe}
             />
           )}
+        </div>
+      )
+    }
+    if (this.props.summaryInstructions){
+      return (
+        <div>{JSON.stringify(this.props.instructions)}
+           <SelectedRecipe
+            key={index}
+            step={step}
+          />
         </div>
       )
     } else {
@@ -76,16 +114,17 @@ class RecipeList extends React.Component {
 function mapStateToProps(state) {
   return {
     recipes: state.recipes,
-    searchQuery: state.searchQuery
+    searchQuery: state.searchQuery,
+    summaryInstructions: state.summaryInstructions,
+    instructions: state.instructions
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setSearch:setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes}, dispatch);
+  return bindActionCreators({setSearch: setSearch, setRecipe: setRecipe, fetchRecipes: fetchRecipes }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
-
 
 
 

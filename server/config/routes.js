@@ -28,6 +28,18 @@ module.exports = function(app, express) {
     });
   })
 
+  app.post('/api/getInstructions', function(req, res){
+    helpers.searchInstructions(req.body.id, function(response){
+      res.send(response);
+    });
+  })
+
+  app.post('/api/getSummary', function(req, res){
+    console.log("Routes heard getSummary, req.body: ", req.body);
+    helpers.searchSummary(req.body.id, function(response){
+      res.send(response);
+    });
+  });
 }
 
 
