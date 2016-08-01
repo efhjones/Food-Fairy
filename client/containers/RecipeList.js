@@ -14,6 +14,7 @@ import ReduxPromise from 'redux-promise';
 class RecipeList extends React.Component {
   constructor(props) {
     super(props);
+    this.onRecipeClick = this.onRecipeClick.bind(this);
   }
 
   componentWillMount() {
@@ -25,14 +26,8 @@ class RecipeList extends React.Component {
           console.log('advGetRecipes' , recipes)
           context.props.fetchRecipes(recipes);
         })
-    } else { this.getRecipes(context.props.searchQuery)
-      .then(function(recipes){
-        context.props.fetchRecipes(recipes);
-      })
-      .catch(function(err) {
-        throw err;
-      });
-
+    } else {
+      this.getRecipes(context.props.searchQuery.recipe);
     }
 
   }
