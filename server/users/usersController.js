@@ -1,6 +1,8 @@
 const jwt = require('jwt-simple');
 const config = require('../config/app_key');
 const User = require('./usersModel');
+const Recipe = require('./recipesModel');
+const helpers = require('../config/helpers');
 /*
   # Takes in a user
   @sub => subject
@@ -50,5 +52,53 @@ exports.signup = function(req, res, next) {
       if (err) { return next(err); }
       res.json({token: userToken(user)});
     })
+  })
+}
+
+exports.getUserRecipes = function (req, res) {
+  var username = req.username;
+  User.findOne({username: username}, function (err, user){
+    if (err) { return next(err); }
+    if (user) {
+      res.send(200, user.recipes);
+    }
+  })
+}
+
+exports.saveUserRecipe = function (req, res) {
+  console.log("Save user recipe called");
+  //req should be {recipe: {}, user: username}
+  var username = req.user;
+  User.findOne({username: username}, function (err, user){
+    if (err) { return next(err); }
+    if (user) {
+      var rr = req.recipe;
+      var recipe = new Recipe ({
+        title: rr.title,
+
+      })
+      user.recipes.push(recipe);
+      res.send(201, user.recipes);
+    }
+  })
+}
+
+
+
+exports.deleteUserRecipe = function (req, res) {
+  console.log("Delete user recipe called");
+  //req should be {recipe: {}, user: username}
+  var username = req.user;
+  var recipeId = req.recipeId;
+  User.findOne({username: username}, function (err, user){
+    if (err) { return next(err); }
+    if (user) {
+      for (var i = 0; i < user.recipes.length; i++){
+        if (recipes[i].id === recipeId) {
+          recipes.splice(i, 1);
+        }
+      }
+      res.send(201, user.recipes);
+    }
   })
 }

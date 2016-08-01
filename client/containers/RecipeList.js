@@ -69,7 +69,7 @@ class RecipeList extends React.Component {
       })
   }
 
-  onRecipeClick(recipe) {
+  onRecipeClick(recipe, index) {
     var context = this;
     console.log('onRecipeClick Id: ', recipe.id);
     var envelope = {
@@ -105,7 +105,7 @@ class RecipeList extends React.Component {
         <div>
           {this.props.recipes.map((recipe, index) =>
             <RecipeListEntry
-            onRecipeClick={ () => this.onRecipeClick(recipe) }
+            onRecipeClick={ () => this.onRecipeClick(recipe, index) }
             key={index}
             recipe={recipe}
             />

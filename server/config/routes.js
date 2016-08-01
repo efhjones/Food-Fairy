@@ -23,7 +23,7 @@ module.exports = function(app, express) {
   app.post('/api/recipes', function(req, res){
     // console.log("In routes, post req", req.body);
     helpers.searchSpoonacular({query: req.body.query, max : 10}, function(response){
-      console.log("response", response);
+      // console.log("response", response);
       res.send(response);
     });
   })
@@ -44,8 +44,50 @@ module.exports = function(app, express) {
   app.post('/api/advrecipes', function(req, res){
     console.log("Advanced Recipes Request in Routes", req.body);
     helpers.complexSearch({query: req.body.query, max : 10}, function(response){
-      console.log("response", response);
+      // console.log("response", response);
       res.send(response);
+    });
+  })
+
+  //************ GETS SAVED RECIPES ****************//
+
+  app.post('/api/saved', function(req, res){
+    //should take in username
+    console.log("Saved Recipes Request in Routes", req.body);
+     usersController.getUserRecipes(req.body.id, function(recipes){
+      //this should be an array of the user recipes as objects
+      var allRecipes = [];
+      recipes.forEach(function(recipe){
+        //push the result of the request to the allRecipes
+        allRecipes.push(helpers.searchSpoonacular(recipe.id))
+      })
+      res.send(response, allRecipes);
+    });
+  })
+
+  //************ SAVES A RECIPE ****************//
+
+  app.post('/api/saveRecipe', function(req, res){
+    //should take in username
+    console.log("Save a Recipe Request in Routes", req.body);
+    //req.body should have { recipeObj: {}, user: username }
+    //req.body.user?
+    usersController.saveUserRecipe(req.body function (response) {
+      console.log("response after saveUserRecipe in routes", response);
+      res.send(201, response);
+    });
+
+  })
+
+  //************ DELETES A RECIPE ****************//
+
+  app.post('/api/deleteRecipe', function(req, res){
+    //should take in username
+    //req.body should have { recipeId: NUMBER, user: username }
+    console.log("Delete Recipe Request in Routes", req.body);
+    usersController.deleteUserRecipe(req.body function (response) {
+      console.log("response after deleteUserRecipe in routes", response);
+      res.send(201, response);
     });
   })
 

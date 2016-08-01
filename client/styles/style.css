@@ -249,4 +249,12 @@ body {
   margin: 10px;
 }
 
+.saveAndDelete {
+  padding: 5px;
+  color: black;
+  border-radius: 1px solid black;
+  font-family: Roboto;
+  background-color: white;
+  margin: 5px;
+}
 

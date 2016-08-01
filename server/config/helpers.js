@@ -1,5 +1,6 @@
 var request = require('request');
 var apikey = process.env.API_KEY || require('../key').api_key;
+var User = require('../users/usersModel');
 
 exports.searchSpoonacular = function(obj, cb) {
   var query = obj.query;
@@ -86,7 +87,6 @@ exports.complexSearch = function(obj, cb) {
 
 
 }
-
 
   // $.ajax({
   //   url: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients',

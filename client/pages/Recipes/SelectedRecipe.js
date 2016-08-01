@@ -25,6 +25,37 @@ class SelectedRecipe extends React.Component {
     console.log("SelectedRecipe got new props", this.props);
   }
 
+  saveRecipe (recipeObj) {
+
+    console.log("save recipe clicked", recipeObj);
+    return axios.post('/api/saveRecipe', recipeObj)
+    .then(function(response){
+      console.log('Recipe saved: ', response);
+      //re-direct to recipe list rendered with user recipes
+    })
+    .catch(function(err){
+      console.log("Axios save recipe call had error: ", err);
+    })
+  }
+
+
+  deleteRecipe (recipeId) {
+    var envelope = {
+      recipeId: recipeId,
+      user: this.props.username
+    }
+    console.log("save recipe clicked", envelope);
+    return axios.post('/api/deleteRecipe', envelope)
+    .then(function(response){
+      console.log('Response deleted: ', response);
+      //re-direct to recipe list rendered with user recipes
+    })
+    .catch(function(err){
+      console.log("Axios save recipe call had error: ", err);
+    })
+  }
+
+
   render(){
     console.log("Yo selected recipe props in da house", this.props)
     if (!this.props.summaryInstructions){
@@ -46,6 +77,9 @@ class SelectedRecipe extends React.Component {
               }
               )}
             </ol>
+          {/*Button for saving recipe click*/}
+          <button className='saveAndDelete' onClick={ () => this.saveRecipe(this.props.summaryInstructions) }>Save</button>
+          <button className='saveAndDelete' onClick={ () => this.deleteRecipe(this.props.summaryInstructions.summary.id) }>Delete</button>
           </div>
           </div>
       </div>
