@@ -38,9 +38,8 @@ class RecipeList extends React.Component {
     var envelope = {
       query: query
     }
-    axios.post('/api/recipes', envelope)
+    return axios.post('/api/recipes', envelope)
     .then(function(recipes) {
-      console.log('')
       return recipes.data;
     })
     .then(function(results){

@@ -39,6 +39,7 @@ module.exports = function(app, express) {
     helpers.searchSummary(req.body.id, function(response){
       res.send(response);
     });
+  });
 }
 
 
