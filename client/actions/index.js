@@ -22,6 +22,8 @@ export function signinUser({username, password}) {
         3) Allow access to db route
       */
       .then(response => {
+        dispatch({type: AUTH_USER });
+        localStorage.setItem('token', response.data.token);
         browserHistory.push('/saved');
       })
       .catch(() => {
