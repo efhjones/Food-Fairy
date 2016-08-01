@@ -19,7 +19,6 @@ class RecipeList extends React.Component {
   componentWillMount() {
     var context = this;
     console.log("Recipe list props", this.props);
-    this.getRecipes(context.props.searchQuery.recipe)
     if (context.props.advSearch){
       this.advGetRecipes(context.props.advSearch)
         .then(function(recipes){
@@ -33,11 +32,9 @@ class RecipeList extends React.Component {
       .catch(function(err) {
         throw err;
       });
-<<<<<<< e0386a8bf6e4c95451091fc6d8b8c22362a17f68
 
-=======
     }
->>>>>>> added advanced search
+
   }
 
   componentWillReceiveProps () {
@@ -65,9 +62,10 @@ class RecipeList extends React.Component {
     var envelope = {
       query: query
     }
+    console.log('running advGetRecipes')
     return axios.post('/api/advrecipes', envelope)
       .then(function(recipes) {
-        console.log(recipes.data.results);
+        console.log('recipe results', recipes.data.results);
         return recipes.data.results;
       })
       .catch(function(err) {
@@ -81,7 +79,7 @@ class RecipeList extends React.Component {
     var envelope = {
       id: recipe.id
     }
-    axios.post('/api/getInstructions', envelope)
+    return axios.post('/api/getInstructions', envelope)
     .then(function(instructionData) {
       axios.post('/api/getSummary', envelope)
         .then(function(summaryData) {
@@ -140,7 +138,7 @@ function mapStateToProps(state) {
     recipes: state.recipes,
     searchQuery: state.searchQuery,
     summaryInstructions: state.summaryInstructions,
-    instructions: state.instructions
+    instructions: state.instructions,
     advSearch: state.advSearch
   }
 }

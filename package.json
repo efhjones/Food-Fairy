@@ -2,11 +2,7 @@
   "name": "foodfairy",
   "version": "1.0.0",
   "scripts": {
-<<<<<<< e0386a8bf6e4c95451091fc6d8b8c22362a17f68
     "build": "webpack --config ./webpack.prod.config.js --progress --colors --watch ",
-=======
-    "build": "webpack --config ./webpack.prod.config.js --progress --colors --watch",
->>>>>>> added advanced search
     "start": "npm run build & node server/server.js",
     "dev": "npm run build & webpack-dev-server"
   },

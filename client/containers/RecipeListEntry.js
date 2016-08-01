@@ -17,15 +17,8 @@ export default class RecipeListEntry extends React.Component {
       <div
         className='recipe-card'
         onClick={this.props.onRecipeClick}>
-      <img className='recipeImg' src={this.props.recipe.image} />
-      <div>{this.props.recipe.title}</div>
-      <div>YOYOYOYOYO
-         <div>
-          <img src={this.props.recipe.image} />
-         </div>
-        <div>
-          {this.props.recipe.title}
-         </div>
+        <img className='recipeImg' src={this.props.recipe.image} />
+        <div>{this.props.recipe.title}</div>
       </div>
     )
   }
