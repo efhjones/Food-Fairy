@@ -85,7 +85,7 @@ class RecipeList extends React.Component {
             summary: summary,
             instructions: instructions
           });
-        browserHistory.push('/SelectedRecipe');
+        browserHistory.push('/s/SelectedRecipe');
         // window.location.hash = '/SelectedRecipe';
         })
         .catch(function(err) {
