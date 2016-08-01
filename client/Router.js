@@ -8,7 +8,6 @@ import SelectedRecipe from './pages/Recipes/SelectedRecipe';
 import AdvancedSearch from './containers/AdvancedSearch';
 import SignupPage from  './pages/auth/Signup';
 import SigninPage from './pages/auth/Signin';
-import LoginPage from './pages/auth/Login';
 import SearchNestPage from './components/SearchNest'
 
 
