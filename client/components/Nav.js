@@ -16,7 +16,7 @@ export default class Nav extends React.Component {
             <a href="/#/"><div className="col-md-2 col-sm-2 navpad">Home</div></a>
             <a href="/#/advanced"><div className="col-md-2 col-sm-2 navpad line">Search</div></a>
             <div className="col-md-4 col-sm-4"><img className="center-block logo" src="imgs/logo2.png" /></div>
-            <a href="/#/login"><div className="col-md-2 col-sm-2 navpad line">Login</div></a>
+            <a href="/#/signin"><div className="col-md-2 col-sm-2 navpad line">Signin</div></a>
             <a href="/#/signup"><div className="col-md-2 col-sm-2 navpad">Signup</div></a>
           </div>
         </nav>

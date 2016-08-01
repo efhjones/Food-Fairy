@@ -2,7 +2,21 @@ export const SET_SEARCH = 'SET_SEARCH';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const SET_RECIPE = 'SET_RECIPE';
 export const SET_ADV = 'SET_ADV';
+export const AUTH_USER = 'AUTH_USER';
+export const UNAUTH_USER = 'UNAUTH_USER';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const FETCH_MESSAGE = 'FETCH_MESSAGE';
+import axios from 'axios';
 
+// Normally you always want to return an object from action creator
+  //Redux-thunk allows you to return a function, allowing you direct access to dispatch to:
+    // 1) Deplay a dispatch
+    // 2) Send dispatch, only if a condition is met
+export function signinUser({username, password}) {
+  return function(dispatch) {
+    axios.post('/user/signin', {username: username, password: password})
+  }
+}
 
 export function setSearch(search) {
   return {
